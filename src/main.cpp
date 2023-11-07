@@ -22,6 +22,9 @@ void setup() {
   pinMode(13, OUTPUT);
 
   BLEDevice::init("AirPods 69");
+  esp_err_t esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_ADV, ESP_PWR_LVL_P21);
+  esp_err_t esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_SCAN, ESP_PWR_LVL_P21);
+  esp_err_t esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_DEFAULT, ESP_PWR_LVL_P21);
 
   // Create the BLE Server
   BLEServer *pServer = BLEDevice::createServer();

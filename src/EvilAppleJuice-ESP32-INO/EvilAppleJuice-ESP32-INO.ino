@@ -49,6 +49,9 @@ void setup() {
   Serial.println("Starting ESP32 BLE");
 
   BLEDevice::init("AirPods 69");
+  esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_ADV, ESP_PWR_LVL_P21);
+  esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_SCAN, ESP_PWR_LVL_P21);
+  esp_ble_tx_power_set(ESP_BLE_PWR_TYPE_DEFAULT, ESP_PWR_LVL_P21);
 
   // Create the BLE Server
   BLEServer *pServer = BLEDevice::createServer();
@@ -79,11 +82,11 @@ void loop() {
   // Randomly pick data from one of the devices
   // First decide short or long
   // 0 = long (headphones), 1 = short (misc stuff like Apple TV)
-  int device_choice = random(2);
-  //int device_choice = 1;
+  //int device_choice = random(2);
+  int device_choice = 0;
   if (device_choice == 0){
     int index = random(17);
-    oAdvertisementData.addData(std::string((char*)DEVICES[index], 31));
+    oAdvertisementData.addData(std::string((char*)DEVICES[0], 31));
   } else {
     int index = random(12);
     oAdvertisementData.addData(std::string((char*)SHORT_DEVICES[index], 23));
@@ -130,6 +133,6 @@ void loop() {
   // Start advertising
   Serial.println("Sending Advertisement...");
   pAdvertising->start();
-  delay(delaySeconds * 1000); // delay for delaySeconds seconds
+  delay(delaySeconds * 500); // delay for delaySeconds seconds
   pAdvertising->stop();
 }
